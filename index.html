@@ -194,14 +194,13 @@
 
     <script>
 
-      // Linked-list based stack implementation
       function StackNode(value, next = null) {
         this.value = value;
         this.next = next;
       }
 
       function LinkedStack() {
-        this.head = null; // top of stack
+        this.head = null;
         this._size = 0;
       }
 
@@ -234,7 +233,6 @@
 
       LinkedStack.prototype.size = function () { return this._size; };
 
-      // Two stacks: back (previous pages) and forward (next pages)
       const backStack = new LinkedStack();
       const forwardStack = new LinkedStack();
 
@@ -289,14 +287,11 @@
       }
 
       function loadPage(page, event, fromHistory = false) {
-        // normalize page string (only filename)
         const pageName = page.split('/').pop();
 
         if (!fromHistory) {
-          // navigate normally: push current onto back stack
           if (currentPage && currentPage !== pageName) {
             backStack.push(currentPage);
-            // navigating to a new page clears forward stack
             forwardStack.clear();
           }
         }
@@ -321,10 +316,8 @@
       // ================= BACK / FORWARD BUTTON =================
       function goBack() {
         if (backStack.isEmpty()) return;
-        // push current into forward
         if (currentPage) forwardStack.push(currentPage);
         const previous = backStack.pop();
-        // load from history (don't add current into back again)
         currentPage = previous;
         setIframeSrc(previous, true);
         updateRibbonButtons();
@@ -341,5 +334,6 @@
     </script>
 
   </body>
+
 
 </html>
